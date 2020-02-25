@@ -1,0 +1,16 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShutdownAssistant"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="ShutdownAssistant.MainWindow"
+        mc:Ignorable="d"
+        Title="Shutdown Assistant" Height="350" Width="500" ResizeMode="NoResize">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,30,0,0" Text="Please enter desired shutdown time&#xA;(24 hour format)" TextAlignment="Center" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18"/>
+        <xctk:TimePicker HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Width="136" Height="42" FontFamily="Microsoft Sans Serif" FontSize="18"/>
+        <Button Content="Schedule Shutdown" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Width="170" Height="40"/>
+        <Button Content="Cancel Shutdown" HorizontalAlignment="Center" Margin="0,267,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Foreground="White" Background="Crimson" Width="170" Height="40"/>
+    </Grid>
+</Window>
