@@ -20,9 +20,15 @@ namespace ShutdownAssistant
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+            timePicker.Value = DateTime.Now;
+        }
+
+        public void Shutdown_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }
