@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>ShutdownAssistant.App</StartupObject>
-    <ApplicationIcon>ShutdownAssistant.ico</ApplicationIcon>
+    <ApplicationIcon>shutdownassistant_icon_256_thicc.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
