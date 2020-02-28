@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="Shutdown Assistant" Height="350" Width="500" ResizeMode="NoResize">
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,30,0,0" Text="Please enter desired shutdown time&#xA;(24 hour format)" TextAlignment="Center" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18"/>
-        <xctk:TimePicker x:Name="timePicker" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Width="136" Height="42" FontFamily="Microsoft Sans Serif" FontSize="18" />
+        <TextBlock HorizontalAlignment="Center" Margin="0,30,0,0" Text="Please enter desired shutdown time:" TextAlignment="Center" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18"/>
         <Button Click="Shutdown_Click" Content="Schedule Shutdown" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Width="170" Height="40"/>
         <Button Click="Cancel_Shutdown" Content="Cancel Shutdown" HorizontalAlignment="Center" Margin="0,267,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Foreground="White" Background="Crimson" Width="170" Height="40"/>
+        <xctk:DateTimePicker x:Name="timePicker" HorizontalAlignment="Center" Margin="0,89,0,0" VerticalAlignment="Top" Height="41" Width="385" FontFamily="Microsoft Sans Serif" TextAlignment="Center" FontSize="16"/>
     </Grid>
 </Window>
