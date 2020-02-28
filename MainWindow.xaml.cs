@@ -28,12 +28,6 @@ namespace ShutdownAssistant
             timePicker.Value = DateTime.Now;
         }
 
-        //public void TimePicker_UserTimeSelected(object sender, RoutedPropertyChangedEventHandler<DateTime> e)
-        //{
-        //    var picker = sender as TimePicker;
-        //    DateTime? time = picker.Value;
-        //}
-
         public void Shutdown_Click(object sender, RoutedEventArgs e)
         {
             DateTime LocalTime = DateTime.Now;
