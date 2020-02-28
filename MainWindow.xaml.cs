@@ -36,19 +36,22 @@ namespace ShutdownAssistant
 
         public void Shutdown_Click(object sender, RoutedEventArgs e)
         {
-            TimeSpan LocalTime = DateTime.Now.TimeOfDay;
+            DateTime LocalTime = DateTime.Now;
+            TimeSpan OneHour = new TimeSpan(0, 1, 0, 0);
+            DateTime OneHourIntoFuture = (LocalTime + OneHour);
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
             process.StartInfo = startInfo;
-            if (timePicker.Value.HasValue)
+            var UserSelectedTime = timePicker.Value ?? OneHourIntoFuture;
+            if (UserSelectedTime >= DateTime.Now)
             {
-                var UserSelectedTime = timePicker.Value;
-                TimeSpan TimeDifference = (UserSelectedTime - LocalTime).TotalSeconds;
-                startInfo.Arguments = "/C shutdown -s -t " + TimeDifference;
-                System.Windows.MessageBox.Show(startInfo.Arguments);
+                TimeSpan TimeDifference = (UserSelectedTime - LocalTime);
+                int TimeDiffSeconds = (int)(Math.Floor(TimeDifference.TotalSeconds));
+                startInfo.Arguments = "/C shutdown -s -t " + TimeDiffSeconds;
                 process.Start();
+                System.Windows.MessageBox.Show("Shutdown scheduled for "+UserSelectedTime, "Success");
             }
             else
             {
@@ -64,6 +67,7 @@ namespace ShutdownAssistant
             process.StartInfo = startInfo;
             startInfo.Arguments = "/C shutdown -a";
             process.Start();
+            System.Windows.MessageBox.Show("Shutdown aborted.", "Notice");
         }
     }
 }
