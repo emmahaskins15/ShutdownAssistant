@@ -7,3 +7,7 @@ Compatible with Windows 10, probably 7 or older as well.
 # Feautes
 * Schedule shutdown
 * Abort scheduled shutdown
+* Portable - nothing to install!
+
+### Usage
+Extract .ZIP and run ShutdownAssistant.exe
