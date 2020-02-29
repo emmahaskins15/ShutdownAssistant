@@ -1,0 +1,14 @@
+﻿<Window x:Class="ShutdownAssistant.About_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShutdownAssistant"
+        mc:Ignorable="d"
+        Title="About" Height="200" Width="250">
+    <Grid>
+        <TextBox  TextAlignment="Left" Text="Xceed Extended WPF Toolkit v3.8 copyright Xceed Software, Inc.&#x0a;See /Licenses/wpftoolkit for more" TextWrapping="Wrap" FontFamily="Microsoft Sans Serif" TextChanged="TextBox_TextChanged" Margin="21,126,0,10" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Top" Width="190"/>
+        <Image VerticalAlignment="Center" Source="/img/hdr_xceed_logo_x21.png" Height="24" Margin="0,0,86,0" HorizontalAlignment="Right" Width="96"/>
+        <TextBox HorizontalAlignment="Center" Text="Shutdown Assisant&#x0a;Author: Emma Haskins&#x0a;Version: 0.1" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" TextChanged="TextBox_TextChanged_1" FontFamily="Microsoft Sans Serif" Margin="0,10,0,0" Height="43"/>
+    </Grid>
+</Window>

@@ -1,4 +1,11 @@
-﻿using System;
+﻿/* Author: Emma Haskins
+ * Xceed Extended WPF Toolkit developed by Xceed Software, Inc.
+ * Distributed under the Xceed Community License agreement(for non-commercial use)
+ * See /Licenses on Github for more
+ * 
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,6 +69,12 @@ namespace ShutdownAssistant
             startInfo.Arguments = "/C shutdown -a";
             process.Start();
             System.Windows.MessageBox.Show("Shutdown aborted.", "Notice");
+        }
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+
+                About_Window About_Window = new About_Window();
+                About_Window.Show();
         }
     }
 }

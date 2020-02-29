@@ -9,7 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="img\hdr_xceed_logo_x21.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="img\hdr_xceed_logo_x21.png" />
   </ItemGroup>
 
 </Project>
