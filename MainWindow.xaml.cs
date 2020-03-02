@@ -1,7 +1,7 @@
 ﻿/* Author: Emma Haskins
  * Xceed Extended WPF Toolkit developed by Xceed Software, Inc.
  * Distributed under the Xceed Community License agreement(for non-commercial use)
- * See /Licenses on Github for more
+ * See /licenses on Github for more
  * 
 */
 
@@ -44,6 +44,7 @@ namespace ShutdownAssistant
             DateTime LocalTime = DateTime.Now;
             TimeSpan OneHour = new TimeSpan(0, 1, 0, 0);
             DateTime OneHourIntoFuture = (LocalTime + OneHour);
+            Boolean IsForceChecked = Force_Checkbox.IsChecked ?? false;
 
             // Connect to command prompt
             System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -52,14 +53,6 @@ namespace ShutdownAssistant
             startInfo.FileName = "cmd.exe";
             process.StartInfo = startInfo;
             DateTime UserSelectedTime = timePicker.Value ?? OneHourIntoFuture;
-
-            // Logic for if "Force?" checkbox is enabled
-            Boolean IsForceChecked = Force_Checkbox.IsChecked ?? false;
-            if (IsForceChecked)
-            {
-
-            }
-            // End "Force?" checkbox logic
 
             // Check for valid scheduled time and pass arguments to Windows command
             if (UserSelectedTime >= DateTime.Now)
@@ -71,6 +64,7 @@ namespace ShutdownAssistant
                 int TimeDiffSeconds = (int)(Math.Floor(TimeDifference.TotalSeconds));
 
                 // Pass arguments to Windows command
+                // Logic for if "Force?" checkbox is enabled
                 if (IsForceChecked)
                 {
                     startInfo.Arguments = "/C shutdown -f " + Action_Argument + " -t " + TimeDiffSeconds;
@@ -80,7 +74,8 @@ namespace ShutdownAssistant
                     startInfo.Arguments = "/C shutdown " + Action_Argument + " -t " + TimeDiffSeconds;
                 }
                 process.Start();
-                System.Windows.MessageBox.Show("Shutdown scheduled for "+UserSelectedTime, "Success");
+                System.Windows.MessageBox.Show("Shutdown scheduled for " + UserSelectedTime, "Success");
+                Log_Block.Text += startInfo.Arguments + Environment.NewLine;
             }
             else
             {
@@ -128,7 +123,5 @@ namespace ShutdownAssistant
             Force_Checkbox.IsChecked = true;
             Force_Checkbox.IsEnabled = false;
         }
-
-
     }
 }
