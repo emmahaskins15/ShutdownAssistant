@@ -22,7 +22,7 @@
             <RadioButton Content="Shutdown" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Microsoft Sans Serif" Margin="0,0,261,0" GroupName="Action_Type" Checked="Shutdown_Checked" IsChecked="True"/>
             <RadioButton Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="99,0,0,1" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Restart_Checked"/>
             <RadioButton Content="Hibernate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="182,0,0,0" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Hibernate_Checked"/>
-            <CheckBox x:Name="Force_Checkbox"  IsChecked="False" Margin="276,0,0,0" FontFamily="Microsoft Sans Serif" ToolTip="Forces running applications to close without warning users.&#x0a;Caution: Using the force option might result in loss of unsaved data." VerticalAlignment="Center" HorizontalAlignment="Left" Panel.ZIndex="3" Content="Force?" Checked="Force_Checkbox_Checked"/>
+            <CheckBox x:Name="Force_Checkbox"  IsChecked="False" Margin="276,0,0,0" FontFamily="Microsoft Sans Serif" ToolTip="Forces running applications to close without warning users.&#x0a;Caution: Using the force option might result in loss of unsaved data." VerticalAlignment="Center" HorizontalAlignment="Left" Panel.ZIndex="3" Content="Force?"/>
         </Grid>
     </Grid>
 </Window>

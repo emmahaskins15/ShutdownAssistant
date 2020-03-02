@@ -23,6 +23,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace ShutdownAssistant
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -100,10 +101,7 @@ namespace ShutdownAssistant
                 About_Window About_Window = new About_Window();
                 About_Window.Show();
         }
-        private void Force_Checkbox_Checked(object sender, RoutedEventArgs e)
-        {
-            Action_Argument = "-f";
-        }
+
         public void Shutdown_Checked(object sender, RoutedEventArgs e)
         {
            Action_Argument = "-s";
