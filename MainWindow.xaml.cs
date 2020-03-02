@@ -71,10 +71,16 @@ namespace ShutdownAssistant
                 int TimeDiffSeconds = (int)(Math.Floor(TimeDifference.TotalSeconds));
 
                 // Pass arguments to Windows command
-                startInfo.Arguments = "/C shutdown " + Action_Argument + " -t " + TimeDiffSeconds;
+                if (IsForceChecked)
+                {
+                    startInfo.Arguments = "/C shutdown -f " + Action_Argument + " -t " + TimeDiffSeconds;
+                }
+                else
+                {
+                    startInfo.Arguments = "/C shutdown " + Action_Argument + " -t " + TimeDiffSeconds;
+                }
                 process.Start();
                 System.Windows.MessageBox.Show("Shutdown scheduled for "+UserSelectedTime, "Success");
-                System.Windows.MessageBox.Show(startInfo.Arguments);
             }
             else
             {
@@ -103,20 +109,20 @@ namespace ShutdownAssistant
                 About_Window.Show();
         }
 
-        public void Shutdown_Checked(object sender, RoutedEventArgs e)
+        private void Shutdown_Checked(object sender, RoutedEventArgs e)
         {
            Action_Argument = "-s";
            Force_Checkbox.IsChecked = false;
            Force_Checkbox.IsEnabled = true;
         }
 
-        public void Restart_Checked(object sender, RoutedEventArgs e)
+        private void Restart_Checked(object sender, RoutedEventArgs e)
         {
-            Action_Argument = "-r";
+           Action_Argument = "-r";
             Force_Checkbox.IsChecked = false;
             Force_Checkbox.IsEnabled = true;
         }
-        public void Hibernate_Checked(object sender, RoutedEventArgs e)
+        private void Hibernate_Checked(object sender, RoutedEventArgs e)
         {
             Action_Argument = "-h";
             Force_Checkbox.IsChecked = true;
