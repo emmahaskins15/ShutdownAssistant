@@ -34,6 +34,7 @@ namespace ShutdownAssistant
         {
             InitializeComponent();
             timePicker.Value = DateTime.Now;
+            Shutdown_Radio.IsChecked = true;
 
         }
         public void Shutdown_Click(object sender, RoutedEventArgs e)
