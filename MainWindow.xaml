@@ -7,10 +7,22 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="ShutdownAssistant.MainWindow"
         mc:Ignorable="d"
         Title="Shutdown Assistant" Height="350" Width="500" ResizeMode="NoResize">
+
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,30,0,0" Text="Please enter desired shutdown time&#xA;(24 hour format)" TextAlignment="Center" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18"/>
-        <xctk:TimePicker x:Name="timePicker" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Width="136" Height="42" FontFamily="Microsoft Sans Serif" FontSize="18" />
-        <Button Click="Shutdown_Click" Content="Schedule Shutdown" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Width="170" Height="40"/>
-        <Button Click="Cancel_Shutdown" Content="Cancel Shutdown" HorizontalAlignment="Center" Margin="0,267,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Foreground="White" Background="Crimson" Width="170" Height="40"/>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="About" Click="About_Click"/>
+            </Menu>
+        </DockPanel>
+        <TextBlock HorizontalAlignment="Center" Margin="0,30,0,0" Text="Please enter desired shutdown time:" TextAlignment="Center" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18"/>
+        <Button Click="Shutdown_Click" Content="Schedule Action" HorizontalAlignment="Center" Margin="0,198,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Width="170" Height="40"/>
+        <Button Click="Cancel_Shutdown" Content="Cancel Action" HorizontalAlignment="Center" Margin="0,255,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Foreground="White" Background="Crimson" Width="170" Height="40"/>
+        <xctk:DateTimePicker x:Name="timePicker" HorizontalAlignment="Center" Margin="0,89,0,0" VerticalAlignment="Top" Height="41" Width="385" FontFamily="Microsoft Sans Serif" TextAlignment="Center" FontSize="16"/>
+        <Grid HorizontalAlignment="Center" Height="16" Margin="21,0,0,0" VerticalAlignment="Center" Width="333">
+            <RadioButton Content="Shutdown" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Microsoft Sans Serif" Margin="0,0,261,0" GroupName="Action_Type" Checked="Shutdown_Checked" IsChecked="True"/>
+            <RadioButton Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="99,0,0,1" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Restart_Checked"/>
+            <RadioButton Content="Hibernate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="182,0,0,0" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Hibernate_Checked"/>
+            <CheckBox x:Name="Force_Checkbox"  IsChecked="False" Margin="276,0,0,0" FontFamily="Microsoft Sans Serif" ToolTip="Forces running applications to close without warning users.&#x0a;Caution: Using the force option might result in loss of unsaved data." VerticalAlignment="Center" HorizontalAlignment="Left" Panel.ZIndex="3" Content="Force?" Checked="Force_Checkbox_Checked"/>
+        </Grid>
     </Grid>
 </Window>
