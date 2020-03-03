@@ -38,7 +38,7 @@ namespace ShutdownAssistant
             timePicker.Value = DateTime.Now;
             Shutdown_Radio.IsChecked = true;
 
-            if (!HibernateEnabled())
+            if (HibernateEnabled() == false)
             {
                 Hibernate_Radio.IsEnabled = false;
                 Log_Block.Text += "Hibernate is disabled on this system." + Environment.NewLine;
