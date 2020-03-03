@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,6 +38,14 @@ namespace ShutdownAssistant
             timePicker.Value = DateTime.Now;
             Shutdown_Radio.IsChecked = true;
 
+            if (!HibernateEnabled())
+            {
+                Hibernate_Radio.IsEnabled = false;
+                Log_Block.Text += "Hibernate is disabled on this system.";
+            } else
+            {
+                Log_Block.Text += "Hibernate is enabled on this system.";
+            }
         }
         public void Shutdown_Click(object sender, RoutedEventArgs e)
         {
@@ -79,10 +88,7 @@ namespace ShutdownAssistant
                     process.Start();
                     Log_Block.Text += Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine;
                     System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
-                }
-                
-
-                
+                }           
             }
             else
             {
@@ -135,5 +141,71 @@ namespace ShutdownAssistant
             Force_Checkbox.IsChecked = true;
             Force_Checkbox.IsEnabled = false;
         }
+
+        // Check if hibernate is enabled on current computer
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        struct SYSTEM_POWER_CAPABILITIES
+        {
+            [MarshalAs(UnmanagedType.U1)]
+            public bool PowerButtonPresent;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool SleepButtonPresent;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool LidPresent;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool SystemS1;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool SystemS2;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool SystemS3;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool SystemS4;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool SystemS5;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool HiberFilePresent;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool FullWake;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool VideoDimPresent;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool ApmPresent;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool UpsPresent;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool ThermalControl;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool ProcessorThrottle;
+            public byte ProcessorMinThrottle;
+            public byte ProcessorMaxThrottle;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool FastSystemS4;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+            private byte[] spare2;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool DiskSpinDown;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+            private byte[] spare3;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool SystemBatteriesPresent;
+            [MarshalAs(UnmanagedType.U1)]
+            public bool BatteriesAreShortTerm;
+        }
+
+        [DllImport("powrprof.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetPwrCapabilities(out SYSTEM_POWER_CAPABILITIES systemPowerCapabilites);
+        
+        public static bool HibernateEnabled()
+        {
+            SYSTEM_POWER_CAPABILITIES systemPowerCapabilites;
+            bool ok = GetPwrCapabilities(out systemPowerCapabilites);
+            if (!ok)
+            {
+                throw new Exception("Unable to retrieve power capabilities");
+            }
+            return systemPowerCapabilites.HiberFilePresent;
+        }
+        // End hibernate check
     }
 }
