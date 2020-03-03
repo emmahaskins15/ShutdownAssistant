@@ -41,10 +41,12 @@ namespace ShutdownAssistant
             if (!HibernateEnabled())
             {
                 Hibernate_Radio.IsEnabled = false;
-                Log_Block.Text += "Hibernate is disabled on this system.";
+                Log_Block.Text += "Hibernate is disabled on this system." + Environment.NewLine;
+                Log_Block.ScrollToEnd();
             } else
             {
-                Log_Block.Text += "Hibernate is enabled on this system.";
+                Log_Block.Text += "Hibernate is enabled on this system." + Environment.NewLine;
+                Log_Block.ScrollToEnd();
             }
         }
         public void Shutdown_Click(object sender, RoutedEventArgs e)
@@ -79,21 +81,24 @@ namespace ShutdownAssistant
                 {
                     startInfo.Arguments = "/C shutdown -f " + Action_Argument + " -t " + TimeDiffSeconds;
                     process.Start();
-                    Log_Block.Text += Action_Title + " (forced)" + " scheduled for " + UserSelectedTime  + Environment.NewLine;
+                    Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime  + Environment.NewLine);
                     System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
+                    Log_Block.ScrollToEnd();
                 }
                 else
                 {
                     startInfo.Arguments = "/C shutdown " + Action_Argument + " -t " + TimeDiffSeconds;
                     process.Start();
-                    Log_Block.Text += Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine;
+                    Log_Block.AppendText(Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine);
                     System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
+                    Log_Block.ScrollToEnd();
                 }           
             }
             else
             {
                 System.Windows.MessageBox.Show("Please enter a valid time", "Error");
-                Log_Block.Text += "Invalid time entered." + Environment.NewLine;
+                Log_Block.AppendText("Invalid time entered." + Environment.NewLine);
+                Log_Block.ScrollToEnd();
             }
         }
 
@@ -110,7 +115,8 @@ namespace ShutdownAssistant
             startInfo.Arguments = "/C shutdown -a";
             process.Start();
             System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
-            Log_Block.Text += "Scheduled action canceled." + Environment.NewLine;
+            Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
+            Log_Block.ScrollToEnd();
         }
         private void About_Click(object sender, RoutedEventArgs e)
         {
@@ -200,11 +206,7 @@ namespace ShutdownAssistant
         {
             SYSTEM_POWER_CAPABILITIES systemPowerCapabilites;
             bool ok = GetPwrCapabilities(out systemPowerCapabilites);
-            if (!ok)
-            {
-                throw new Exception("Unable to retrieve power capabilities");
-            }
-            return systemPowerCapabilites.HiberFilePresent;
+            return systemPowerCapabilites.SystemS4;
         }
         // End hibernate check
     }
