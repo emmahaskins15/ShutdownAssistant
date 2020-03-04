@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,19 +52,13 @@ namespace ShutdownAssistant
         }
         public void Shutdown_Click(object sender, RoutedEventArgs e)
         {
+            CancellationTokenSource source = new CancellationTokenSource();
 
             // Prepare default value
             DateTime LocalTime = DateTime.Now;
             TimeSpan OneHour = new TimeSpan(0, 1, 0, 0);
             DateTime OneHourIntoFuture = (LocalTime + OneHour);
             Boolean IsForceChecked = Force_Checkbox.IsChecked ?? false;
-
-            // Connect to command prompt
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            process.StartInfo = startInfo;
             DateTime UserSelectedTime = timePicker.Value ?? OneHourIntoFuture;
 
             // Check for valid scheduled time and pass arguments to Windows command
@@ -72,28 +67,67 @@ namespace ShutdownAssistant
                 // Calculate time difference between local time and selected scheduled time
                 TimeSpan TimeDifference = (UserSelectedTime - LocalTime);
 
-                //Convert difference into seconds, rounding down
+                //Convert TimeDifference into seconds, rounding down
                 int TimeDiffSeconds = (int)(Math.Floor(TimeDifference.TotalSeconds));
 
-                // Pass arguments to Windows command
-                // Logic for if "Force?" checkbox is enabled
-                if (IsForceChecked)
+                switch (Action_Title)
                 {
-                    startInfo.Arguments = "/C shutdown -f " + Action_Argument + " -t " + TimeDiffSeconds;
-                    process.Start();
-                    Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime  + Environment.NewLine);
-                    System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
-                    Log_Block.ScrollToEnd();
+                    case "Hibernate":
+                            // TODO Implement logic for SetSuspendState(true, true, false);
+
+                            Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime + Environment.NewLine);
+                            System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
+                            Log_Block.ScrollToEnd();
+                        break;
+
+                    case "Sleep":
+                        if (IsForceChecked)
+                        {
+                            // TODO Implement logic for SetSuspendState(false, true, false);
+
+                            Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime + Environment.NewLine);
+                            System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
+                            Log_Block.ScrollToEnd();
+                        }
+                        else
+                        {
+                            // TODO Implement logic for SetSuspendState(false, false, false);
+
+                            Log_Block.AppendText(Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine);
+                            System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
+                            Log_Block.ScrollToEnd();
+                        }
+                        break;
+
+                    case "Shutdown":
+                    case "Restart":
+                        // Connect to command prompt
+                        System.Diagnostics.Process process = new System.Diagnostics.Process();
+                        System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                        startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                        startInfo.FileName = "cmd.exe";
+                        process.StartInfo = startInfo;
+
+                        if (IsForceChecked)
+                        {
+                            startInfo.Arguments = "/C shutdown -f " + Action_Argument + " -t " + TimeDiffSeconds;
+                            process.Start();
+                            Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime  + Environment.NewLine);
+                            System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
+                            Log_Block.ScrollToEnd();
+                        }
+                        else
+                        {
+                            startInfo.Arguments = "/C shutdown " + Action_Argument + " -t " + TimeDiffSeconds;
+                            process.Start();
+                            Log_Block.AppendText(Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine);
+                            System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
+                            Log_Block.ScrollToEnd();
+                        }
+                        break;
                 }
-                else
-                {
-                    startInfo.Arguments = "/C shutdown " + Action_Argument + " -t " + TimeDiffSeconds;
-                    process.Start();
-                    Log_Block.AppendText(Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine);
-                    System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
-                    Log_Block.ScrollToEnd();
-                }           
             }
+
             else
             {
                 System.Windows.MessageBox.Show("Please enter a valid time", "Error");
@@ -107,16 +141,35 @@ namespace ShutdownAssistant
         // This is probably redundant, and can likely be improved in the future
         public void Cancel_Shutdown(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            process.StartInfo = startInfo;
-            startInfo.Arguments = "/C shutdown -a";
-            process.Start();
-            System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
-            Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
-            Log_Block.ScrollToEnd();
+
+            switch (Action_Title)
+            {
+                case "Hibernate":
+                    // TODO Logic to cancel SetSuspendState
+                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
+                    Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
+                    Log_Block.ScrollToEnd();
+                    break;
+                case "Sleep":
+                    // TODO Logic to cancel SetSuspendState
+                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
+                    Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
+                    Log_Block.ScrollToEnd();
+                    break;
+                case "Shutdown":
+                case "Restart":
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                    startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    startInfo.FileName = "cmd.exe";
+                    process.StartInfo = startInfo;
+                    startInfo.Arguments = "/C shutdown -a";
+                    process.Start();
+                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
+                    Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
+                    Log_Block.ScrollToEnd();
+                    break;
+            }
         }
         private void About_Click(object sender, RoutedEventArgs e)
         {
@@ -146,6 +199,13 @@ namespace ShutdownAssistant
             Action_Title = "Hibernate";
             Force_Checkbox.IsChecked = true;
             Force_Checkbox.IsEnabled = false;
+        }
+
+        private void Sleep_Checked(object sender, RoutedEventArgs e)
+        {
+            Action_Title = "Sleep";
+            Force_Checkbox.IsChecked = false;
+            Force_Checkbox.IsEnabled = true;
         }
 
         // Check if hibernate is enabled on current computer
@@ -209,5 +269,21 @@ namespace ShutdownAssistant
             return systemPowerCapabilites.SystemS4;
         }
         // End hibernate check
+
+        // Testing suspend and hibernate functions
+        [DllImport("Powrprof.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern bool SetSuspendState(bool hiberate, bool forceCritical, bool disableWakeEvent);
+
+        private void Suspend_Button_Click(object sender, RoutedEventArgs e)
+        {
+            SetSuspendState(false, false, false);
+        }
+
+        private void Hibernate_Button_Click(object sender, RoutedEventArgs e)
+        {
+            SetSuspendState(true, true, false);
+
+        }
+        // End testing suspend and hibernate functions
     }
 }

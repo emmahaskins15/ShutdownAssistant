@@ -24,6 +24,9 @@
             <RadioButton x:Name="Hibernate_Radio" Content="Hibernate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="182,0,0,0" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Hibernate_Checked" ToolTip="Puts the local computer into hibernation, if hibernation is enabled. Can only be used with 'force' argument."/>
             <CheckBox x:Name="Force_Checkbox" Margin="276,0,0,0" FontFamily="Microsoft Sans Serif" ToolTip="Forces running applications to close without warning users.&#x0a;Caution: Using the force option might result in loss of unsaved data." VerticalAlignment="Center" HorizontalAlignment="Left" Content="Force?"/>
         </Grid>
+        <Button x:Name="Suspend_Button" Content="Suspend" Width="50" Height="50" Margin="45,245,405,191" Click="Suspend_Button_Click"/>
+        <Button x:Name="Hibernate_Button" Content="Hibernate" Margin="105,245,345,191" Click="Hibernate_Button_Click"/>
+
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,322,0,0">
             <Label Content="Log:" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif"/>
             <TextBox x:Name="Log_Block" HorizontalAlignment="Left" Margin="0,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="76" Width="384" FontFamily="Courier New" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="White" IsReadOnly="True"/>
