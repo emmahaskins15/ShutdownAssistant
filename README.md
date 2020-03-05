@@ -9,7 +9,7 @@ Requires .NET Core Runtime
 # Feautes
 * Schedule shutdown
 * Abort scheduled shutdown
-* Portable - nothing to install!
+* Portable
 
 # Usage
 Extract .ZIP and run ShutdownAssistant.exe
