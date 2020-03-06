@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShutdownAssistant"
         mc:Ignorable="d"
-        Title="About" Height="200" Width="250">
+        Title="About" Height="200" Width="250" ResizeMode="NoResize">
     <Grid>
-        <TextBox  TextAlignment="Center" Text="Xceed Extended WPF Toolkit v3.8 copyright Xceed Software, Inc.&#x0a;See /licenses/wpftoolkit for more" TextWrapping="Wrap" FontFamily="Microsoft Sans Serif" Margin="21,126,0,10" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Top" FontSize="10" BorderBrush="White" Focusable="False" IsTabStop="False" IsHitTestVisible="False"/>
-        <Image VerticalAlignment="Center" Source="/img/hdr_xceed_logo_x21.png" Height="24" Margin="0,0,86,0" HorizontalAlignment="Right" Width="96"/>
+        <TextBox  TextAlignment="Center" Text="Xceed Extended WPF Toolkit v3.8 copyright Xceed Software, Inc.&#x0a;See /licenses/wpftoolkit for more" TextWrapping="Wrap" FontFamily="Microsoft Sans Serif" Margin="0,109,0,0" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Top" FontSize="10" BorderBrush="White" Focusable="False" IsTabStop="False" IsHitTestVisible="False" Padding="10,0,10,0" Width="250" VerticalAlignment="Top" />
+        <Image VerticalAlignment="Center" Source="/img/hdr_xceed_logo_x21.png" Height="24" Margin="0,0,0,0" HorizontalAlignment="Center" Width="96"/>
         <TextBox HorizontalAlignment="Center" Text="Shutdown Assisant&#x0a;Author: Emma Haskins&#x0a;Version: 0.1" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" FontFamily="Microsoft Sans Serif" Margin="0,10,0,0" Height="43" BorderBrush="White" Focusable="False" IsHitTestVisible="False" IsTabStop="False"/>
     </Grid>
 </Window>
