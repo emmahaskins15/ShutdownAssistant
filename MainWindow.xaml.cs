@@ -70,7 +70,13 @@ namespace ShutdownAssistant
             DateTime UserSelectedTime = timePicker.Value ?? OneHourIntoFuture;
 
             // Check for valid scheduled time and pass arguments to Windows command
-            if (UserSelectedTime >= DateTime.Now)
+            if (UserSelectedTime > DateTime.Now.AddDays(23))
+            {
+                Log_Block.AppendText("Selected time must be within 23 days." + Environment.NewLine);
+                Log_Block.ScrollToEnd();
+                System.Windows.MessageBox.Show("Please enter a time within 23 days.", "Error");
+            }
+            else if (UserSelectedTime >= DateTime.Now)
             {
                 // Calculate time difference between local time and selected scheduled time
                 TimeSpan TimeDifference = (UserSelectedTime - LocalTime);
@@ -152,13 +158,12 @@ namespace ShutdownAssistant
                         }
                         break;
                 }
-            }
-
+            } 
             else
             {
                 Log_Block.AppendText("Invalid time entered." + Environment.NewLine);
                 Log_Block.ScrollToEnd();
-                System.Windows.MessageBox.Show("Please enter a valid time", "Error");
+                System.Windows.MessageBox.Show("Please enter a valid time.", "Error");
             }
         }
 
