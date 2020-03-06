@@ -85,41 +85,43 @@ namespace ShutdownAssistant
                 {
                     case "Hibernate":
                         // Creates task for (forced) hibernate
-                        
-                        var HibernateTask = new Task(async delegate
+                        var HibernateTask = Task.Run(async delegate
                         {
-                            SetSuspendState(b1, b2, b3);
                             await Task.Delay(TimeDiffMillis, HibernateTokenSource.Token);
+                            SetSuspendState(b1, b2, b3);
                         });
                         Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime + Environment.NewLine);
-                            System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
-                            Log_Block.ScrollToEnd();
+                        Log_Block.ScrollToEnd();
+                        System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
+
                         break;
 
                     case "Sleep":
                         if (IsForceChecked)
                         {
                             b2 = true;
+                            // Creates task for (forced) sleep
                             var ForcedSleepTask = new Task(async delegate
                             {
-                                SetSuspendState(b1, b2, b3);
                                 await Task.Delay(TimeDiffMillis, ForcedSleepTokenSource.Token);
+                                SetSuspendState(b1, b2, b3);
                             });
                             Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime + Environment.NewLine);
-                            System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
                             Log_Block.ScrollToEnd();
+                            System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
                         }
                         else
                         {
                             b2 = false;
+                            // Creates task for sleep
                             var SleepTask = new Task(async delegate
                             {
-                                SetSuspendState(b1, b2, b3);
                                 await Task.Delay(TimeDiffMillis, SleepTokenSource.Token);
+                                SetSuspendState(b1, b2, b3);
                             });
                             Log_Block.AppendText(Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine);
-                            System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
                             Log_Block.ScrollToEnd();
+                            System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
                         }
                         break;
 
@@ -137,16 +139,16 @@ namespace ShutdownAssistant
                             startInfo.Arguments = "/C shutdown -f " + Action_Argument + " -t " + TimeDiffSeconds;
                             process.Start();
                             Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime  + Environment.NewLine);
-                            System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
                             Log_Block.ScrollToEnd();
+                            System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
                         }
                         else
                         {
                             startInfo.Arguments = "/C shutdown " + Action_Argument + " -t " + TimeDiffSeconds;
                             process.Start();
                             Log_Block.AppendText(Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine);
-                            System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
                             Log_Block.ScrollToEnd();
+                            System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
                         }
                         break;
                 }
@@ -154,9 +156,9 @@ namespace ShutdownAssistant
 
             else
             {
-                System.Windows.MessageBox.Show("Please enter a valid time", "Error");
                 Log_Block.AppendText("Invalid time entered." + Environment.NewLine);
                 Log_Block.ScrollToEnd();
+                System.Windows.MessageBox.Show("Please enter a valid time", "Error");
             }
         }
 
