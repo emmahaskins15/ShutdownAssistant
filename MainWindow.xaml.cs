@@ -33,20 +33,28 @@ namespace ShutdownAssistant
     {
         public string Action_Argument { get; private set; }
         public string Action_Title { get; private set; }
+        public bool b1, b2;
+        public static bool b3 = false;
+        readonly CancellationTokenSource HibernateTokenSource = new CancellationTokenSource();
+        readonly CancellationTokenSource ForcedSleepTokenSource = new CancellationTokenSource();
+        readonly CancellationTokenSource SleepTokenSource = new CancellationTokenSource();
+
+
         public MainWindow()
         {
             InitializeComponent();
             timePicker.Value = DateTime.Now;
             Shutdown_Radio.IsChecked = true;
+            
 
             if (HibernateEnabled() == false)
             {
                 Hibernate_Radio.IsEnabled = false;
-                Log_Block.Text += "Hibernate is disabled on this system." + Environment.NewLine;
+                Log_Block.Text += "Hibernate is not supported by your computer." + Environment.NewLine;
                 Log_Block.ScrollToEnd();
             } else
             {
-                Log_Block.Text += "Hibernate is enabled on this system." + Environment.NewLine;
+                Log_Block.Text += "Hibernate is supported by your computer." + Environment.NewLine;
                 Log_Block.ScrollToEnd();
             }
         }
@@ -69,13 +77,21 @@ namespace ShutdownAssistant
 
                 //Convert TimeDifference into seconds, rounding down
                 int TimeDiffSeconds = (int)(Math.Floor(TimeDifference.TotalSeconds));
+                int TimeDiffMillis = (int)(Math.Floor(TimeDifference.TotalMilliseconds));
+
+
 
                 switch (Action_Title)
                 {
                     case "Hibernate":
-                            // TODO Implement logic for SetSuspendState(true, true, false);
-
-                            Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime + Environment.NewLine);
+                        // Creates task for (forced) hibernate
+                        
+                        var HibernateTask = new Task(async delegate
+                        {
+                            SetSuspendState(b1, b2, b3);
+                            await Task.Delay(TimeDiffMillis, HibernateTokenSource.Token);
+                        });
+                        Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime + Environment.NewLine);
                             System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
                             Log_Block.ScrollToEnd();
                         break;
@@ -83,16 +99,24 @@ namespace ShutdownAssistant
                     case "Sleep":
                         if (IsForceChecked)
                         {
-                            // TODO Implement logic for SetSuspendState(false, true, false);
-
+                            b2 = true;
+                            var ForcedSleepTask = new Task(async delegate
+                            {
+                                SetSuspendState(b1, b2, b3);
+                                await Task.Delay(TimeDiffMillis, ForcedSleepTokenSource.Token);
+                            });
                             Log_Block.AppendText(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime + Environment.NewLine);
                             System.Windows.MessageBox.Show(Action_Title + " (forced)" + " scheduled for " + UserSelectedTime, "Success");
                             Log_Block.ScrollToEnd();
                         }
                         else
                         {
-                            // TODO Implement logic for SetSuspendState(false, false, false);
-
+                            b2 = false;
+                            var SleepTask = new Task(async delegate
+                            {
+                                SetSuspendState(b1, b2, b3);
+                                await Task.Delay(TimeDiffMillis, SleepTokenSource.Token);
+                            });
                             Log_Block.AppendText(Action_Title + " scheduled for " + UserSelectedTime + Environment.NewLine);
                             System.Windows.MessageBox.Show(Action_Title + " scheduled for " + UserSelectedTime, "Success");
                             Log_Block.ScrollToEnd();
@@ -145,16 +169,17 @@ namespace ShutdownAssistant
             switch (Action_Title)
             {
                 case "Hibernate":
-                    // TODO Logic to cancel SetSuspendState
-                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
+                    HibernateTokenSource.Cancel();
                     Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
                     Log_Block.ScrollToEnd();
+                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
                     break;
                 case "Sleep":
-                    // TODO Logic to cancel SetSuspendState
-                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
+                    SleepTokenSource.Cancel();
+                    ForcedSleepTokenSource.Cancel();
                     Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
                     Log_Block.ScrollToEnd();
+                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
                     break;
                 case "Shutdown":
                 case "Restart":
@@ -165,9 +190,9 @@ namespace ShutdownAssistant
                     process.StartInfo = startInfo;
                     startInfo.Arguments = "/C shutdown -a";
                     process.Start();
-                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
                     Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
                     Log_Block.ScrollToEnd();
+                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
                     break;
             }
         }
@@ -197,6 +222,8 @@ namespace ShutdownAssistant
         {
             Action_Argument = "-h";
             Action_Title = "Hibernate";
+            b1 = true;
+            b2 = true;
             Force_Checkbox.IsChecked = true;
             Force_Checkbox.IsEnabled = false;
         }
@@ -204,11 +231,13 @@ namespace ShutdownAssistant
         private void Sleep_Checked(object sender, RoutedEventArgs e)
         {
             Action_Title = "Sleep";
+            b1 = false;
+            b2 = false;
             Force_Checkbox.IsChecked = false;
             Force_Checkbox.IsEnabled = true;
         }
 
-        // Check if hibernate is enabled on current computer
+        // Check if hibernate is supported by current computer
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         struct SYSTEM_POWER_CAPABILITIES
         {
@@ -274,7 +303,7 @@ namespace ShutdownAssistant
         [DllImport("Powrprof.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern bool SetSuspendState(bool hiberate, bool forceCritical, bool disableWakeEvent);
 
-        private void Suspend_Button_Click(object sender, RoutedEventArgs e)
+/*        private void Suspend_Button_Click(object sender, RoutedEventArgs e)
         {
             SetSuspendState(false, false, false);
         }
@@ -283,7 +312,7 @@ namespace ShutdownAssistant
         {
             SetSuspendState(true, true, false);
 
-        }
+        }*/
         // End testing suspend and hibernate functions
     }
 }

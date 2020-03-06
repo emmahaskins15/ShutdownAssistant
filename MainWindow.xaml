@@ -18,15 +18,20 @@
         <Button Click="Shutdown_Click" Content="Schedule Action" HorizontalAlignment="Center" Margin="0,198,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Width="170" Height="40"/>
         <Button Click="Cancel_Shutdown" Content="Cancel Action" HorizontalAlignment="Center" Margin="0,255,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="18" Foreground="White" Background="Crimson" Width="170" Height="40"/>
         <xctk:DateTimePicker x:Name="timePicker" HorizontalAlignment="Center" Margin="0,89,0,0" VerticalAlignment="Top" Height="41" Width="385" FontFamily="Microsoft Sans Serif" TextAlignment="Center" FontSize="16"/>
-        <Grid HorizontalAlignment="Center" Height="16" Margin="0,158,0,0" VerticalAlignment="Top" Width="332">
-            <RadioButton x:Name="Shutdown_Radio" Content="Shutdown" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Microsoft Sans Serif" Margin="0,0,261,0" GroupName="Action_Type" Checked="Shutdown_Checked" ToolTip="Shuts down the computer."/>
-            <RadioButton Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="99,0,0,1" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Restart_Checked" ToolTip="Restarts the computer after shutdown."/>
-            <RadioButton x:Name="Hibernate_Radio" Content="Hibernate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="182,0,0,0" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Hibernate_Checked" ToolTip="Puts the local computer into hibernation, if hibernation is enabled. Can only be used with 'force' argument."/>
-            <CheckBox x:Name="Force_Checkbox" Margin="276,0,0,0" FontFamily="Microsoft Sans Serif" ToolTip="Forces running applications to close without warning users.&#x0a;Caution: Using the force option might result in loss of unsaved data." VerticalAlignment="Center" HorizontalAlignment="Left" Content="Force?"/>
+        <Grid Height="16" Margin="0,158,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <RadioButton Grid.Column="0" x:Name="Shutdown_Radio" Content="Shutdown" FontFamily="Microsoft Sans Serif" Margin="0,0,0,0" GroupName="Action_Type" Checked="Shutdown_Checked" ToolTip="Shuts down the computer." VerticalAlignment="Center" Padding="0,0,15,0"/>
+            <RadioButton Grid.Column="1" Content="Restart" Margin="0,0,0,0" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Restart_Checked" ToolTip="Restarts the computer after shutdown." VerticalAlignment="Center" Padding="0,0,15,0"/>
+            <RadioButton Grid.Column="2" Content="Sleep" Margin="0,0,0,0" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Sleep_Checked" ToolTip="Restarts the computer after shutdown." VerticalAlignment="Center" Padding="0,0,15,0"/>
+            <RadioButton Grid.Column="3" x:Name="Hibernate_Radio" Content="Hibernate" Margin="0,0,0,0" FontFamily="Microsoft Sans Serif" GroupName="Action_Type" Checked="Hibernate_Checked" ToolTip="Puts the local computer into hibernation, if hibernation is enabled. Can only be used with 'force' argument." VerticalAlignment="Center" Padding="0,0,15,0"/>
+            <CheckBox Grid.Column="4" x:Name="Force_Checkbox" Margin="0,0,0,0" FontFamily="Microsoft Sans Serif" ToolTip="Forces running applications to close without warning users.&#x0a;Caution: Using the force option might result in loss of unsaved data." Content="Force?" VerticalAlignment="Center" Width="Auto" Padding="0,0,15,0"/>
         </Grid>
-        <Button x:Name="Suspend_Button" Content="Suspend" Width="50" Height="50" Margin="45,245,405,191" Click="Suspend_Button_Click"/>
-        <Button x:Name="Hibernate_Button" Content="Hibernate" Margin="105,245,345,191" Click="Hibernate_Button_Click"/>
-
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,322,0,0">
             <Label Content="Log:" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif"/>
             <TextBox x:Name="Log_Block" HorizontalAlignment="Left" Margin="0,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="76" Width="384" FontFamily="Courier New" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="White" IsReadOnly="True"/>
