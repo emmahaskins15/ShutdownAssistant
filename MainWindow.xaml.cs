@@ -50,6 +50,7 @@ namespace ShutdownAssistant
             if (HibernateEnabled() == false)
             {
                 Hibernate_Radio.IsEnabled = false;
+                Hibernate_Radio.ToolTip = "Hibernate is not supported by your computer";
                 Log_Block.Text += "Hibernate is not supported by your computer." + Environment.NewLine;
                 Log_Block.ScrollToEnd();
             } else
@@ -304,6 +305,17 @@ namespace ShutdownAssistant
             bool ok = GetPwrCapabilities(out systemPowerCapabilites);
             return systemPowerCapabilites.SystemS4;
         }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            Height = 440;
+        }
+
+        private void Expander_Collapsed(object sender, RoutedEventArgs e)
+        {
+            Height = 360;
+        }
+
         // End hibernate check
 
         // Testing suspend and hibernate functions
