@@ -4,4 +4,6 @@ bin/
 /obj
 /bin
 /.vs
-/properties
+Properties/PublishProfiles/FolderProfile.pubxml
+Properties/PublishProfiles/FolderProfile.pubxml.user
+*.pfx
