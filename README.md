@@ -14,4 +14,4 @@ Requires .NET Core Runtime
 # Usage
 Extract .ZIP and run ShutdownAssistant.exe
 
-![Preview of Shutdown Assistant](https://i.postimg.cc/Vst6P1yJ/Annotation-2020-03-08-115349.png)](https://postimg.cc/V5Y1Xxkw)
+![Preview of Shutdown Assistant](https://i.postimg.cc/Vst6P1yJ/Annotation-2020-03-08-115349.png)]
