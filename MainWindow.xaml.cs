@@ -169,40 +169,20 @@ namespace ShutdownAssistant
         }
 
         // Logic to cancel scheduled action
-        // Is principally the same as above, just with a different argument.
-        // This is probably redundant, and can likely be improved in the future
-        public void Cancel_Shutdown(object sender, RoutedEventArgs e)
+        public void Cancel_Actions(object sender, RoutedEventArgs e)
         {
-
-            switch (Action_Title)
-            {
-                case "Hibernate":
-                    HibernateTokenSource.Cancel();
-                    Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
-                    Log_Block.ScrollToEnd();
-                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
-                    break;
-                case "Sleep":
-                    SleepTokenSource.Cancel();
-                    ForcedSleepTokenSource.Cancel();
-                    Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
-                    Log_Block.ScrollToEnd();
-                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
-                    break;
-                case "Shutdown":
-                case "Restart":
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                    startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    startInfo.FileName = "cmd.exe";
-                    process.StartInfo = startInfo;
-                    startInfo.Arguments = "/C shutdown -a";
-                    process.Start();
-                    Log_Block.AppendText("Scheduled action canceled." + Environment.NewLine);
-                    Log_Block.ScrollToEnd();
-                    System.Windows.MessageBox.Show("Scheduled action canceled.", "Notice");
-                    break;
-            }
+            HibernateTokenSource.Cancel();
+            SleepTokenSource.Cancel();
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            process.StartInfo = startInfo;
+            startInfo.Arguments = "/C shutdown -a";
+            process.Start();
+            Log_Block.AppendText("Scheduled actions canceled." + Environment.NewLine);
+            Log_Block.ScrollToEnd();
+            System.Windows.MessageBox.Show("Scheduled actions have been canceled.", "Success");
         }
         private void About_Click(object sender, RoutedEventArgs e)
         {
