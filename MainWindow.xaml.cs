@@ -206,9 +206,8 @@ namespace ShutdownAssistant
         }
         private void About_Click(object sender, RoutedEventArgs e)
         {
-
-                About_Window About_Window = new About_Window();
-                About_Window.Show();
+            About_Window About_Window = new About_Window();
+            About_Window.ShowDialog();
         }
 
         private void Shutdown_Checked(object sender, RoutedEventArgs e)
@@ -305,7 +304,9 @@ namespace ShutdownAssistant
             bool ok = GetPwrCapabilities(out systemPowerCapabilites);
             return systemPowerCapabilites.SystemS4;
         }
+        // End hibernate check
 
+        // Change window height based on whether or not the expander is collapsed or expanded
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
             Height = 440;
@@ -316,7 +317,7 @@ namespace ShutdownAssistant
             Height = 360;
         }
 
-        // End hibernate check
+
 
         // Testing suspend and hibernate functions
         [DllImport("Powrprof.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
