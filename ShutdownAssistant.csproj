@@ -6,10 +6,21 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>shutdownassistant_icon_256_thicc.ico</ApplicationIcon>
 	<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+	<Version>0.2</Version>
+	<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+	<SignAssembly>true</SignAssembly>
+	<AssemblyOriginatorKeyFile>ShutdownAssistantSigningKey.pfx</AssemblyOriginatorKeyFile>
+	<DelaySign>false</DelaySign>
+	<PackageIcon>shutdownassistant_icon_256_thicc.ico</PackageIcon>
+	<PackageIconUrl />
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="img\hdr_xceed_logo_x21.png" />
+    <None Include="shutdownassistant_icon_256_thicc.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
