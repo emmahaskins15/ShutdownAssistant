@@ -1,6 +1,6 @@
 # ShutdownAssistant
 
-Schedule a time for your computer to shut down.
+Schedule a time for your computer to shut down, restart, sleep, or hibernate.
 
 Compatible with Windows 10, probably 7 or older as well.
 
