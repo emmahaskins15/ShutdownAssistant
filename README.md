@@ -7,8 +7,8 @@ Compatible with Windows 10, probably 7 or older as well.
 Requires .NET Core Runtime
 
 # Features
-* Schedule shutdown
-* Abort scheduled shutdown
+* Schedule shutdown / restart / sleep / hibernate.
+* Cancel scheduled action
 * Portable
 
 # Usage
